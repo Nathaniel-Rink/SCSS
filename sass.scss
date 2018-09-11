@@ -1,0 +1,281 @@
+/*************
+Borders
+*************/
+@mixin bg-img($url, $img-width, $img-height, $additional-vertical-padding: 0px, $background-size: 90%){
+  $default-pad: $img-height / $img-width * 100%;
+  background-image: url($url);
+  background-repeat: no-repeat;
+  background-size: $background-size;
+  padding-top: $default-pad;
+  padding-top: calc( #{$default-pad} + #{$additional-vertical-padding});
+  background-position: center bottom $default-pad/2;
+  width: 100%;
+  position: relative;
+}
+
+
+
+/*************
+Borders
+*************/
+
+// Round radius at position by amount.
+//
+// * legal values for `$vert`: `top`, `bottom`
+// * legal values for `$horz`: `left`, `right`
+@mixin border-corner-radius($vert, $horz, $radius: $default-border-radius) {
+  border-#{$vert}-#{$horz}-radius: $radius;
+}
+
+// Round top-left corner only
+@mixin border-top-left-radius($radius: $default-border-radius) {
+  @include border-corner-radius(top, left, $radius);
+}
+
+// Round top-right corner only
+@mixin border-top-right-radius($radius: $default-border-radius) {
+  @include border-corner-radius(top, right, $radius); }
+
+// Round bottom-left corner only
+@mixin border-bottom-left-radius($radius: $default-border-radius) {
+  @include border-corner-radius(bottom, left, $radius);
+}
+
+// Round bottom-right corner only
+@mixin border-bottom-right-radius($radius: $default-border-radius) {
+  @include border-corner-radius(bottom, right, $radius);
+}
+
+// Round both top corners by amount
+@mixin border-top-radius($radius: $default-border-radius) {
+  @include border-top-left-radius($radius);
+  @include border-top-right-radius($radius);
+}
+
+// Round both right corners by amount
+@mixin border-right-radius($radius: $default-border-radius) {
+  @include border-top-right-radius($radius);
+  @include border-bottom-right-radius($radius);
+}
+
+// Round both bottom corners by amount
+@mixin border-bottom-radius($radius: $default-border-radius) {
+  @include border-bottom-left-radius($radius);
+  @include border-bottom-right-radius($radius);
+}
+
+// Round both left corners by amount
+@mixin border-left-radius($radius: $default-border-radius) {
+  @include border-top-left-radius($radius);
+  @include border-bottom-left-radius($radius);
+}
+
+
+
+
+
+**************
+
+
+.flex-container {
+  display: -webkit-flex;
+  display: flex;
+  &.flex-container-vertical-center {
+	align-items: center;
+  }
+  &.flex-container-vertical-baseline {
+	align-items: baseline;
+  }
+  &.flex-container-space-between {
+	justify-content: space-between;
+  }
+  &.flex-container-center {
+	justify-content: center;
+  }
+  &.flex-container-column {
+	flex-direction: column;
+  }
+  .flex-grow-100 {
+	flex-grow: 100;
+  }
+  .flex-grow-0 {
+	flex-grow: 0;
+  }
+}
+
+.ultimate-flex-container {
+  display: -webkit-flex;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.flex-container-right {
+  display: -webkit-flex;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.flex-container-left {
+  display: -webkit-flex;
+  display: flex;
+  align-items: center;
+}
+
+.ng-materials-flex-spacer {
+  flex: 100 100 auto;
+}
+
+.row-eq-height {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+
+***********
+
+$margins-and-padding: (
+		'margin-small': $margin-small,
+		'margin-medium': $margin-medium,
+		'margin-medium-large': $margin-medium-large,
+		'margin-large': $margin-large,
+		'margin-larger': $margin-larger,
+		'margin-xl': $margin-xl,
+		'margin-xxl': $margin-xxl,
+		'margin-zero': $margin-zero,
+		'padding-small': $padding-small,
+		'padding-medium': $padding-medium,
+		'padding-medium-large': $padding-medium-large,
+		'padding-large': $padding-large,
+		'padding-larger': $padding-larger,
+		'padding-xl': $padding-xl,
+		'padding-xxl': $padding-xxl,
+		'padding-zero': $padding-zero,
+);
+
+$loop_properties: margin, padding;
+$loop_sizes: -small, -medium, -medium-large, -large, -larger, -xl, -xxl, -zero;
+$loop-locations: -top, -left, -right, -bottom, null;
+
+@each $loop_property in $loop_properties {
+  @each $loop_size in $loop_sizes {
+	@each $loop-location in $loop_locations {
+	  .#{$loop_property}#{$loop-location}#{$loop-size}{
+		#{$loop_property}#{$loop-location}: map-get($margins-and-padding, #{$loop_property}#{$loop-size});
+	  }
+	  .#{$loop_property}#{$loop-location}-negative#{$loop-size}{
+		#{$loop_property}#{$loop-location}: -1 * map-get($margins-and-padding, #{$loop_property}#{$loop-size});
+	  }
+	}
+  }
+}
+
+.autosize {
+  &.size-auto {
+	height: auto;
+	width: auto;
+  }
+
+  &.height-auto {
+	height: auto;
+  }
+
+  &.width-auto {
+	width: auto;
+  }
+}
+
+
+
+
+.img-loading {
+  background: repeating-linear-gradient(
+				  45deg,
+				  $gray-lighter-bg,
+				  $gray-lighter-bg 10px,
+				  $gray-lighter 10px,
+				  $gray-lighter 20px
+  );
+}
+
+
+
+
+//These classes are used only to debug SCSS
+
+//Colors
+.debug-red {
+  background-color: red !important;
+}
+.debug-blue {
+  background-color: blue !important;
+}
+.debug-green {
+  background-color: green !important;
+}
+.debug-orange {
+  background-color: orange !important;
+}
+
+//Debug indicator
+.debug-splash {
+  height: 2.5em;
+  width: 6em;
+  bottom: 20%;
+  right: 15%;
+  position: absolute;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+  animation: debug-move 3.5s ease-out;
+  animation-fill-mode: forwards;
+}
+.debug-splash > div {
+  background: #E40A5D;
+  height: 2.5em;
+  width: 6em;
+  line-height: 2.5em;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.14), 0 4px 8px rgba(0, 0, 0, 0.28);
+  padding-left: .3em;
+  padding-right: .3em;
+  color: #f1f1f1;
+  text-align: center;
+  font-weight: bold;
+  animation: debug-pulse .7s 16;
+}
+
+@keyframes debug-move {
+  from {
+	bottom: 20%;
+	right: 15%;
+  }
+  to {
+	bottom: 87%;
+	right: 20%;
+  }
+}
+
+@keyframes debug-pulse  {
+  0% {
+	height: 2.25em;
+	width: 5.4em;
+	line-height: 2.25em;
+  }
+  70% {
+	height: 2.5em;
+	width: 6em;
+	box-shadow: 0 0 0 50px rgba(90, 153, 212, 0);
+	line-height: 2.5em;
+  }
+  100% {
+	height: 2.25em;
+	width: 5.4em;
+	box-shadow: 0 0 0 0 rgba(90, 153, 212, 0);
+	line-height: 2.25em;
+  }
+}
